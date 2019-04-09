@@ -1,3 +1,6 @@
+/*
+* Hintergrund Frame mit Background-Bild
+ */
 package view;
 
 import javax.swing.*;
@@ -34,6 +37,10 @@ public class BackgroundImageJFrame extends JFrame {
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public void resetMainPanel() {
+        mainPanel.removeAll();
     }
 
 }

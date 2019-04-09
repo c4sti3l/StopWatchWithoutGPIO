@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-/**
- *
- * @author Chr!s
- */
 public class ActionController {
 
     private final MainController controller;
@@ -17,4 +8,12 @@ public class ActionController {
         this.controller = controller;
     }
 
+    public void initBtnAction(String type) {
+        switch (type) {
+            case "acker":
+                controller.getGuiController().showAckerSetup();
+                break;
+                
+        }
+    }
 }

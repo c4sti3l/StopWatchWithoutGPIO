@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import view.*;
 
-/**
- *
- * @author Chr!s
- */
 public class GuiController {
 
     MainController controller;
@@ -22,17 +15,22 @@ public class GuiController {
     public GuiController(MainController controller, ActionController actionController) {
         this.controller = controller;
         this.actionController = actionController;
-    }
-
-    public void init() {
-
         this.bgFrame = new BackgroundImageJFrame();
 
-//        InitPanel
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(GuiController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void initFrame() {
         InitPanel initPanel = new InitPanel(actionController, bgFrame.getMainPanel());
-        
-//        
-//        mainPanel.setBounds(500, 300, 500, 500);
+    }
+
+    public void showAckerSetup() {
+        bgFrame.resetMainPanel();
+        AckerPanel ackerPanel = new AckerPanel(actionController, bgFrame.getMainPanel());
     }
 
 }
