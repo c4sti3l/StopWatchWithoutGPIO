@@ -14,14 +14,13 @@ import javax.swing.border.TitledBorder;
 
 public class StarterPanel extends JPanel {
 
-
     public StarterPanel(ActionController controller) {
-      
+
         GridBagConstraints c = new GridBagConstraints();
 
-        c.fill = GridBagConstraints.BOTH;
+        c.fill = GridBagConstraints.HORIZONTAL;
 
-        Font font = new Font("Arial", Font.PLAIN, 40);
+        Font font = new Font("Arial", Font.PLAIN, 20);
 
         TitledBorder border = new TitledBorder("Starter");
         border.setTitleJustification(TitledBorder.LEFT);
@@ -29,8 +28,6 @@ public class StarterPanel extends JPanel {
 
         setBorder(border);
         setLayout(new GridBagLayout());
-
-
 
         /**
          * Buttons

@@ -16,4 +16,8 @@ public class ActionController {
                 
         }
     }
+    
+    public void returnToStartView(){
+        controller.getGuiController().initFrame();
+    }
 }

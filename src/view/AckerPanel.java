@@ -65,7 +65,7 @@ public class AckerPanel extends JPanel {
         c.gridx = 1;
         c.gridy = 0;
         configPanel.add(spinner, c);
-        
+
         //Pylonen Strafe
         label = new JLabel("Pylonenstrafe (s):");
         c.gridwidth = 1;
@@ -81,7 +81,7 @@ public class AckerPanel extends JPanel {
         c.gridx = 1;
         c.gridy = 1;
         configPanel.add(spinner, c);
-        
+
         //Tor Strafe
         label = new JLabel("Torstrafe (s):");
         c.gridwidth = 1;
@@ -118,7 +118,7 @@ public class AckerPanel extends JPanel {
         JButton button;
         button = new JButton("Abbrechen");
         button.addActionListener((ActionEvent e) -> {
-            System.out.println("Cancel");
+            controller.returnToStartView();
         });
         button.setFont(font);
         c.weightx = 100;

@@ -25,6 +25,7 @@ public class GuiController {
     }
 
     public void initFrame() {
+        bgFrame.resetMainPanel();
         InitPanel initPanel = new InitPanel(actionController, bgFrame.getMainPanel());
     }
 
