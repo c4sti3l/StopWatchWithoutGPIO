@@ -14,6 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         MainController controller = new MainController();
+        System.out.println("lol");
         controller.init();
 
 //        JFrame frame = new JFrame();
