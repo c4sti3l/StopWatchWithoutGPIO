@@ -4,10 +4,12 @@ public class MainController {
 
     private final GuiController guiController;
     private final ActionController actionController;
+    private final StarterController starterController;
 
     public MainController() {
         this.actionController = new ActionController(this);
         this.guiController = new GuiController(this, actionController);
+        this.starterController = new StarterController();
     }
 
     public void init() {
