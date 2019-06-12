@@ -10,11 +10,13 @@ public class GuiController {
 
     MainController controller;
     ActionController actionController;
+    StarterController starterController;
     BackgroundImageJFrame bgFrame;
 
-    public GuiController(MainController controller, ActionController actionController) {
+    public GuiController(MainController controller, ActionController actionController, StarterController starterController) {
         this.controller = controller;
         this.actionController = actionController;
+        this.starterController = starterController;
         this.bgFrame = new BackgroundImageJFrame();
 
         try {
@@ -26,12 +28,12 @@ public class GuiController {
 
     public void initFrame() {
         bgFrame.resetMainPanel();
-        InitPanel initPanel = new InitPanel(actionController, bgFrame.getMainPanel());
+        InitPanel initPanel = new InitPanel(actionController, starterController, bgFrame.getMainPanel());
     }
 
     public void showAckerSetup() {
         bgFrame.resetMainPanel();
-        AckerPanel ackerPanel = new AckerPanel(actionController, bgFrame.getMainPanel());
+        AckerPanel ackerPanel = new AckerPanel(actionController, starterController, bgFrame.getMainPanel());
     }
 
 }

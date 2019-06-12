@@ -8,8 +8,8 @@ public class MainController {
 
     public MainController() {
         this.actionController = new ActionController(this);
-        this.guiController = new GuiController(this, actionController);
         this.starterController = new StarterController();
+        this.guiController = new GuiController(this, actionController, starterController);
     }
 
     public void init() {

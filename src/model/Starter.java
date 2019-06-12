@@ -9,7 +9,7 @@ package model;
  *
  * @author Chr!s
  */
-public class Starter {
+public class Starter implements Comparable<Starter> {
 
     private String name;
     private int[] roundTimes;
@@ -47,5 +47,15 @@ public class Starter {
     @Override
     public String toString() {
         return name;
+    }
+
+//    @Override
+//    public String toString() {
+//        return "Employee [id=" + id + "]";
+//    }
+
+    @Override
+    public int compareTo(Starter o) {
+        return this.toString().compareTo(o.toString());
     }
 }

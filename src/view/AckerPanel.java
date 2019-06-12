@@ -4,6 +4,7 @@
 package view;
 
 import controller.ActionController;
+import controller.StarterController;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,7 +17,7 @@ public class AckerPanel extends JPanel {
 
     private JPanel mainPanel;
 
-    public AckerPanel(ActionController controller, JPanel mainPanel) {
+    public AckerPanel(ActionController controller,StarterController starterController, JPanel mainPanel) {
         this.mainPanel = mainPanel;
 
         JButton btn = new JButton("TEST");
@@ -110,7 +111,7 @@ public class AckerPanel extends JPanel {
         c.gridwidth = 1;
         c.gridx = 1;
         c.gridy = 1;
-        mainPanel.add(new StarterPanel(controller), c);
+        mainPanel.add(new StarterPanel(controller, starterController), c);
 
         /**
          * Buttons

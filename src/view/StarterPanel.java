@@ -18,7 +18,10 @@ import model.Starter;
 
 public class StarterPanel extends JPanel {
 
-    public StarterPanel(ActionController controller) {
+//    private StarterController starterController;
+
+    @SuppressWarnings("OverridableMethodCallInConstructor")
+    public StarterPanel(ActionController controller, StarterController starterController) {
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -33,29 +36,15 @@ public class StarterPanel extends JPanel {
         setBorder(border);
         setLayout(new GridBagLayout());
 
-        // Create a list containing CheckboxListItem's
-//        JList<CheckboxListItem> list = new JList<CheckboxListItem>(
-//                new CheckboxListItem[]{new CheckboxListItem("apple"),
-//                    new CheckboxListItem("orange"),
-//                    new CheckboxListItem("mango"),
-//                    new CheckboxListItem("paw paw"),
-//                    new CheckboxListItem("banana")});
-//        JList<Starter> list = new JList<Starter>(
-//                new Starter[]{new Starter("apple"),
-//                    new Starter("orange"),
-//                    new Starter("mango"),
-//                    new Starter("paw paw"),
-//                    new Starter("banana")});
-        StarterController sc = new StarterController();
-        JList<Starter> list = sc.getStarterList();
+//        this.starterController = starterController;
+        JList<Starter> list = starterController.getStarterList();
 
-        // Use a CheckboxListRenderer (see below)
-        // to renderer list cells
         list.setCellRenderer(new CheckboxListRenderer());
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // Add a mouse listener to handle changing selection
         list.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent event) {
                 JList<Starter> list = (JList<Starter>) event.getSource();
 
@@ -71,10 +60,9 @@ public class StarterPanel extends JPanel {
             }
         });
 
-        c.weightx = 100;
+        c.weightx = 200;
         c.weighty = 30;
         c.gridwidth = 2;
-//        c.gridheight = 10;
         c.gridx = 0;
         c.gridy = 0;
         add(list, c);
@@ -83,24 +71,14 @@ public class StarterPanel extends JPanel {
          * Buttons
          */
         JButton button;
-        button = new JButton("Starter hinzufügen");
+        button = new JButton("hinzufügen");
         button.addActionListener((ActionEvent e) -> {
             String eingabe = JOptionPane.showInputDialog(
-                    null, 
+                    null,
                     "Bitte geben Sie den Namen ein",
                     "Neuen Starter hinzufügen",
                     JOptionPane.PLAIN_MESSAGE);
-            
-//            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//            String s = (String)JOptionPane.showInputDialog(
-//                    topFrame,
-//                    "Complete the sentence:\n"
-//                    + "\"Green eggs and...\"",
-//                    "Customized Dialog",
-//                    JOptionPane.PLAIN_MESSAGE,
-//                    icon,
-//                    null,
-//                    "ham");
+            System.out.println(eingabe);
         });
         button.setFont(font);
         c.weightx = 100;
@@ -109,35 +87,65 @@ public class StarterPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 1;
         add(button, c);
-        
-       
-        button = new JButton("Starter verwalten");
-        button.addActionListener((ActionEvent e) -> {
-            System.out.println("AddStarter");
-            String eingabe = JOptionPane.showInputDialog(null, "Bitte geben Sie den Namen ein",
-                    "Neuen Starter hinzufügen",
-                    JOptionPane.PLAIN_MESSAGE);
-            System.out.println("LOL");
-            System.out.println(eingabe);
 
-//            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//            String s = (String)JOptionPane.showInputDialog(
-//                    topFrame,
-//                    "Complete the sentence:\n"
-//                    + "\"Green eggs and...\"",
-//                    "Customized Dialog",
-//                    JOptionPane.PLAIN_MESSAGE,
-//                    icon,
-//                    null,
-//                    "ham");
+        button = new JButton("verwalten");
+        button.addActionListener((ActionEvent e) -> {
+            JDialog dialog = new JDialog();
+            dialog.setLayout(new GridBagLayout());
+
+            c.weightx = 100;
+            c.weighty = 10;
+            c.gridwidth = 2;
+            c.gridx = 0;
+            c.gridy = 0;
+
+            dialog.add(new JLabel("Starter zur Bearbeitung wählen"), c);
+
+            JList<Starter> sList = starterController.getStarterList();
+            int size = list.getModel().getSize();
+            JComboBox box = new JComboBox();
+            box.addItem("-- Bitte wählen --");
+
+            for (int i = 0; i < size; i++) {
+                Starter item = list.getModel().getElementAt(i);
+                box.addItem(item.getName());
+            }
+
+            box.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Gewählt:");
+                    System.out.println(box.getSelectedItem());
+                }
+            });
+
+            c.gridy = 1;
+            dialog.add(box, c);
+
+            c.gridwidth = 1;
+            c.gridy = 2;
+            dialog.add(new JButton("Speichern"), c);
+
+            c.gridwidth = 1;
+            c.gridx = 1;
+            dialog.add(new JButton("Schließen"), c);
+
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialog.setModal(true);
+            dialog.pack();
+            dialog.setSize(400, 100);
+            dialog.setLocationRelativeTo(null);
+            dialog.setTitle("Starter bearbeiten");
+            dialog.setVisible(true);
         });
+
         button.setFont(font);
         c.weightx = 100;
         c.weighty = 30;
         c.gridwidth = 1;
         c.gridx = 1;
         c.gridy = 1;
-//        add(button, c);
+        add(button, c);
     }
 
 }

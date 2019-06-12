@@ -4,6 +4,7 @@
 package view;
 
 import controller.ActionController;
+import controller.StarterController;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,7 +19,7 @@ public class InitPanel extends JPanel {
 
     private JPanel mainPanel;
 
-    public InitPanel(ActionController controller, JPanel mainPanel) {
+    public InitPanel(ActionController controller, StarterController starterController, JPanel mainPanel) {
         this.mainPanel = mainPanel;
 
         JButton btn = new JButton("TEST");

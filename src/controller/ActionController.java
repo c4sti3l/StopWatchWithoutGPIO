@@ -13,7 +13,6 @@ public class ActionController {
             case "acker":
                 controller.getGuiController().showAckerSetup();
                 break;
-                
         }
     }
     
