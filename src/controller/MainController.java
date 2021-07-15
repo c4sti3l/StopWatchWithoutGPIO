@@ -1,5 +1,7 @@
 package controller;
 
+import view.StarterEdit;
+
 public class MainController {
 
     private final GuiController guiController;
@@ -14,10 +16,11 @@ public class MainController {
 
     public void init() {
 //        guiController.initFrame();
+//        StarterEdit starterEdit = new StarterEdit(starterController);
         guiController.showAckerSetup();
     }
 
-    public GuiController getGuiController() {
-        return guiController;
-    }
+//    public GuiController getGuiController() {
+//        return guiController;
+//    }
 }

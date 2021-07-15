@@ -5,11 +5,13 @@
  */
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Chr!s
  */
-public class Starter implements Comparable<Starter> {
+public class Starter implements Serializable, Comparable<Starter> {
 
     private String name;
     private int[] roundTimes;
@@ -53,7 +55,6 @@ public class Starter implements Comparable<Starter> {
 //    public String toString() {
 //        return "Employee [id=" + id + "]";
 //    }
-
     @Override
     public int compareTo(Starter o) {
         return this.toString().compareTo(o.toString());

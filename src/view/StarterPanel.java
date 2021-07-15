@@ -9,7 +9,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
@@ -18,14 +17,12 @@ import model.Starter;
 
 public class StarterPanel extends JPanel {
 
-//    private StarterController starterController;
-
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public StarterPanel(ActionController controller, StarterController starterController) {
 
         GridBagConstraints c = new GridBagConstraints();
 
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.BOTH;
 
         Font font = new Font("Arial", Font.PLAIN, 20);
 
@@ -36,7 +33,6 @@ public class StarterPanel extends JPanel {
         setBorder(border);
         setLayout(new GridBagLayout());
 
-//        this.starterController = starterController;
         JList<Starter> list = starterController.getStarterList();
 
         list.setCellRenderer(new CheckboxListRenderer());
@@ -61,11 +57,13 @@ public class StarterPanel extends JPanel {
         });
 
         c.weightx = 200;
-        c.weighty = 30;
+        c.weighty = 300;
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 0;
-        add(list, c);
+
+        JScrollPane scrollpane = new JScrollPane(list);
+        add(scrollpane, c);
 
         /**
          * Buttons
@@ -79,6 +77,7 @@ public class StarterPanel extends JPanel {
                     "Neuen Starter hinzufügen",
                     JOptionPane.PLAIN_MESSAGE);
             System.out.println(eingabe);
+            starterController.addStarter(eingabe);
         });
         button.setFont(font);
         c.weightx = 100;
@@ -90,53 +89,7 @@ public class StarterPanel extends JPanel {
 
         button = new JButton("verwalten");
         button.addActionListener((ActionEvent e) -> {
-            JDialog dialog = new JDialog();
-            dialog.setLayout(new GridBagLayout());
-
-            c.weightx = 100;
-            c.weighty = 10;
-            c.gridwidth = 2;
-            c.gridx = 0;
-            c.gridy = 0;
-
-            dialog.add(new JLabel("Starter zur Bearbeitung wählen"), c);
-
-            JList<Starter> sList = starterController.getStarterList();
-            int size = list.getModel().getSize();
-            JComboBox box = new JComboBox();
-            box.addItem("-- Bitte wählen --");
-
-            for (int i = 0; i < size; i++) {
-                Starter item = list.getModel().getElementAt(i);
-                box.addItem(item.getName());
-            }
-
-            box.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("Gewählt:");
-                    System.out.println(box.getSelectedItem());
-                }
-            });
-
-            c.gridy = 1;
-            dialog.add(box, c);
-
-            c.gridwidth = 1;
-            c.gridy = 2;
-            dialog.add(new JButton("Speichern"), c);
-
-            c.gridwidth = 1;
-            c.gridx = 1;
-            dialog.add(new JButton("Schließen"), c);
-
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setModal(true);
-            dialog.pack();
-            dialog.setSize(400, 100);
-            dialog.setLocationRelativeTo(null);
-            dialog.setTitle("Starter bearbeiten");
-            dialog.setVisible(true);
+            new StarterEdit(starterController);
         });
 
         button.setFont(font);

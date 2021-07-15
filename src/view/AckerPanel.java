@@ -22,7 +22,7 @@ public class AckerPanel extends JPanel {
 
         JButton btn = new JButton("TEST");
 
-        mainPanel.setBounds(560, 290, 800, 300);
+        mainPanel.setBounds(560, 290, 800, 500);
 
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

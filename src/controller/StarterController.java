@@ -1,13 +1,10 @@
 package controller;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import model.Starter;
@@ -18,49 +15,76 @@ import model.Starter;
  */
 public class StarterController {
 
-    private ArrayList<Starter> starterList;
-    private JList<Starter> sList;
-    private Starter[] starter;
-    private DefaultListModel<Starter> model;
+    private final DefaultListModel<Starter> starterList;
+    private final String starterSave;
 
     public StarterController() {
-        starterList = new ArrayList<Starter>();
-        sList = new JList<Starter>();
-        model = new DefaultListModel<>();
-
-        try {
-            this.loadStarter();
-
-            for (Starter temp : starterList) {
-                System.out.println(temp.getName());
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(StarterController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        starterSave = ".\\src\\config\\starterList";
+        starterList = this.loadStarter();
     }
 
-    public void loadStarter() throws IOException {
-        File file = new File(".\\src\\config\\starterList.txt");
-        Scanner sc = new Scanner(new FileInputStream(file), "iso-8859-1");
-
-        while (sc.hasNext()) {
-            model.addElement(new Starter(sc.nextLine()));
-        }
-    }
-
-    public ArrayList getStarterList2() {
+    /**
+     * Liefert die StarterListe für die UI-Geschichte
+     *
+     * @return Model der StarterListe
+     */
+    public DefaultListModel getStarterListModel() {
         return this.starterList;
     }
 
+    /**
+     * Liefert die StarterListe asl JList für die UI's
+     *
+     * @return StarterListe als JList
+     */
     public JList getStarterList() {
-        JList l = new JList<Starter>(this.model);
-//        Collections.sort(l);
-        return l;
+        return new JList<>(this.starterList);
     }
 
-    public void addStarter(String name) {
-
+    /**
+     * Fügt einen neuen Starter zu der Liste hinzu und speichert diese in einer
+     * Datei
+     *
+     * @param name
+     * @return
+     */
+    public boolean addStarter(String name) {
+        starterList.addElement(new Starter(name));
+        this.saveStarter();
+        return true;
     }
 
+    /**
+     * Schreibt die Liste der Starter in eine Datei
+     */
+    public void saveStarter() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(this.starterSave);
+            try (ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+                objectOut.writeObject(this.starterList);
+                System.out.println("StarterListe gespeichert.");
+            }
+        } catch (IOException ex) {
+            System.out.println("Fehler beim Speichern der StarterListe");
+        }
+    }
+
+    /**
+     * Lädt die Liste der Starter aus der Datei
+     *
+     * @return StarterList
+     */
+    public DefaultListModel<Starter> loadStarter() {
+        DefaultListModel<Starter> list = new DefaultListModel();
+        try {
+            FileInputStream fileOut = new FileInputStream(this.starterSave);
+            try (ObjectInputStream objectOut = new ObjectInputStream(fileOut)) {
+                list = (DefaultListModel) objectOut.readObject();
+                System.out.println("StarterListe geladen.");
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Fehler beim Laden der StarterListe");
+        }
+        return list;
+    }
 }
